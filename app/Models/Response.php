@@ -10,7 +10,8 @@ class Response extends Model
 
     protected $fillable = [
         'inn',
-        'date',
+        'check_date',
+        'data',
     ];
 
     protected $dates = [
@@ -20,7 +21,7 @@ class Response extends Model
     ];
 
     protected $casts = [
-        'json' => 'array',
+        'data' => 'array',
     ];
 
 }
