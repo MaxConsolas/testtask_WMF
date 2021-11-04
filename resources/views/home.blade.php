@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row">
                 <h1>Проверка статуса налогоплательщика</h1>
-                <p class="lead">Введите ИНН налогоплательщика, а также дату <br/>для которой будет осуществлена проверка статуса самозанятого</p>
+                <p class="lead">Введите ИНН налогоплательщика, для которого<br/> будет осуществлена проверка статуса самозанятого</p>
                 <form method="POST" action="{{ route('check') }}" class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
                     @csrf
                     <div class="form-group @error ('inn') has-error @enderror">
@@ -22,13 +22,13 @@
                             <span class="help-block">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-group @error ('date') has-error @enderror">
+                    {{-- <div class="form-group @error ('date') has-error @enderror">
                         <label class="control-label" for="date">Дата</label>
                         <input type="date" class="form-control" name="date" placeholder="Дата" value="{{ old('date') ?? '' }}">
                         @error ('date')
                             <span class="help-block">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
                     <button type="submit" class="btn btn-primary">Проверить</button>
                 </form>
         </div>

@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Http;
 
 class ResponseController extends Controller
 {
-    protected $validation_error_messages = [
-        'date.*' => 'Неккоректная дата',
-    ];
-
     protected $api_endpoint = 'https://statusnpd.nalog.ru/api/v1/tracker/taxpayer_status';
 
     /**
@@ -35,12 +31,11 @@ class ResponseController extends Controller
     {
         $validated = $request->validate([
             'inn'   => ['required', new INN],
-            'date'  => ['required', 'date'],
-        ], $this->validation_error_messages);
+        ]);
 
         $entry = Response::firstOrNew([
             'inn' => $request->inn,
-            'check_date' => $request->date,
+            'check_date' => now()->format('Y-m-d'),
         ]);
 
         if ($entry->exists) {
@@ -50,7 +45,7 @@ class ResponseController extends Controller
         } else {
             $response = Http::timeout(60)->post($this->api_endpoint, [
                 'inn' => $request->inn,
-                'requestDate' => $request->date,
+                'requestDate' => now()->format('Y-m-d'),
             ]);
 
             $entry->data = json_decode($response->getBody()->getContents());
